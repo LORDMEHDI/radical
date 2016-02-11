@@ -103,18 +103,18 @@ local function kick_ban_res(extra, success, result)
         if is_momod2(member_id, chat_id) and not is_admin2(sender) then
           return send_large_msg(receiver, "You can't ban mods/owner/admins")
         end
-        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] banned')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] banned from this group')
         return ban_user(member_id, chat_id)
       elseif get_cmd == 'unban' then
-        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] unbanned')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] unbanned from this group')
         local hash =  'banned:'..chat_id
         redis:srem(hash, member_id)
         return 'User '..user_id..' unbanned'
       elseif get_cmd == 'banall' then
-        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] globally banned')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] globally banned from all my groups')
         return banall_user(member_id, chat_id)
       elseif get_cmd == 'unbanall' then
-        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] un-globally banned')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] un-globally banned from all my groups')
         return unbanall_user(member_id, chat_id)
       end
 end
@@ -122,7 +122,7 @@ end
 local function run(msg, matches)
  if matches[1]:lower() == 'id' then
     if msg.to.type == "user" then
-      return "Bot ID: "..msg.to.id.. "\n\nYour ID: "..msg.from.id
+      return "Radical ID: "..msg.to.id.. "\n\nYour ID: "..msg.from.id
     end
     if type(msg.reply_id) ~= "nil" then
       local name = user_print_name(msg.from)
@@ -309,20 +309,35 @@ end
 return {
   patterns = {
     "^[!/]([Bb]anall) (.*)$",
+    "^([Bb]anall) (.*)$",
     "^[!/]([Bb]anall)$",
+    "^([Bb]anall)$",
     "^[!/]([Bb]anlist) (.*)$",
+    "^([Bb]anlist) (.*)$",
     "^[!/]([Bb]anlist)$",
+    "^([Bb]anlist)$",
     "^[!/]([Gg]banlist)$",
+    "^([Gg]banlist)$",
     "^[!/]([Bb]an) (.*)$",
+    "^([Bb]an) (.*)$",
     "^[!/]([Kk]ick)$",
+    "^([Kk]ick)$",
     "^[!/]([Uu]nban) (.*)$",
+    "^([Uu]nban) (.*)$",
     "^[!/]([Uu]nbanall) (.*)$",
+    "^([Uu]nbanall) (.*)$",
     "^[!/]([Uu]nbanall)$",
+    "^([Uu]nbanall)$",
     "^[!/]([Kk]ick) (.*)$",
+    "^([Kk]ick) (.*)$",
     "^[!/]([Kk]ickme)$",
+    "^([Kk]ickme)$",
     "^[!/]([Bb]an)$",
+    "^([Bb]an)$",
     "^[!/]([Uu]nban)$",
+    "^([Bb]an)$",
     "^[!/]([Ii]d)$",
+    "^([Ii]d)$",
     "^!!tgservice (.+)$"
   },
   run = run,
