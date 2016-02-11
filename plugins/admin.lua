@@ -119,12 +119,12 @@ local function run(msg,matches)
       		end
       	end
     end
-    if matches[1] == "setbotphoto" then
+    if matches[1] == "setbotphoto" and is_sudo(msg) then
     	redis:set("bot:photo", "waiting")
     	return 'Please send me bot photo now'
     end
     if matches[1] == "markread" then
-    	if matches[2] == "on" then
+    	if matches[2] == "on" and is_sudo(msg) then
     		redis:set("bot:markread", "on")
     		return "Mark read > on"
     	end
@@ -138,7 +138,7 @@ local function run(msg,matches)
     	send_large_msg("user#id"..matches[2],matches[3])
     	return "Msg sent"
     end
-    if matches[1] == "block" then
+    if matches[1] == "block" and is_sudo(msg) then
     	if is_admin2(matches[2]) then
     		return "You can't block admins"
     	end
@@ -149,7 +149,7 @@ local function run(msg,matches)
     	unblock_user("user#id"..matches[2],ok_cb,false)
     	return "User unblocked"
     end
-    if matches[1] == "import" then--join by group link
+    if matches[1] == "import" and is_sudo(msg) then--join by group link
     	local hash = parsed_url(matches[2])
     	import_chat_link(hash,ok_cb,false)
     end
@@ -157,7 +157,7 @@ local function run(msg,matches)
       get_contact_list(get_contact_list_callback, {target = msg.from.id})
       return "I've sent contact list with both json and text format to your private"
     end
-    if matches[1] == "delcontact" then
+    if matches[1] == "delcontact" and is_sudo(msg) then
       del_contact("user#id"..matches[2],ok_cb,false)
       return "User "..matches[2].." removed from contact list"
     end
@@ -173,19 +173,28 @@ end
 return {
   patterns = {
 	"^[!/](pm) (%d+) (.*)$",
+	"^(pm) (%d+) (.*)$",
 	"^[!/](import) (.*)$",
+	"^(import) (.*)$",
 	"^[!/](unblock) (%d+)$",
+	"^(unblock) (%d+)$",
 	"^[!/](block) (%d+)$",
+	"^(block) (%d+)$",
 	"^[!/](markread) (on)$",
+	"^(markread) (on)$",
 	"^[!/](markread) (off)$",
+	"^(markread) (off)$",
 	"^[!/](setbotphoto)$",
+	"^(setbotphoto)$",
 	"%[(photo)%]",
 	"^[!/](contactlist)$",
+	"^(contactlist)$",
 	"^[!/](dialoglist)$",
+	"^(dialoglist)$",
 	"^[!/](delcontact) (%d+)$",
-	"^[!/](whois) (%d+)$"
+	"^(delcontact) (%d+)$",
+	"^[!/](whois) (%d+)$",
+	"^(whois) (%d+)$"
   },
   run = run,
 }
---By @imandaneshi :)
---https://github.com/SEEDTEAM/TeleSeed/blob/master/plugins/admin.lua
