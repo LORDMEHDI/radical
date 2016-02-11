@@ -640,8 +640,18 @@ end
 
 
 local function help()
-  local help_text = tostring(_config.help_text)
+  local help_text = tostring(_config.help_text) and is_owner(msg)
   return help_text
+end
+
+local function help()
+  local help_text_member = tostring(_config.help_text) and is_member(msg)
+  return help_text_member
+end
+
+local function help()
+  local help_text_momod = tostring(_config.help_text) and is_momod(msg)
+  return help_text_momod
 end
 
 local function cleanmember(cb_extra, success, result)
@@ -874,7 +884,7 @@ local function run(msg, matches)
         return nil
       end
     end
-    if matches[1] == 'setname' and is_momod(msg) then
+    if matches[1] == 'setname' and is_owner(msg) then
       local new_name = string.gsub(matches[2], '_', ' ')
       data[tostring(msg.to.id)]['settings']['set_name'] = new_name
       save_data(_config.moderation.data, data)
@@ -884,7 +894,7 @@ local function run(msg, matches)
       
       savelog(msg.to.id, "Group { "..msg.to.print_name.." }  name changed to [ "..new_name.." ] by "..name_log.." ["..msg.from.id.."]")
     end
-    if matches[1] == 'setpic' and is_momod(msg) then
+    if matches[1] == 'setpic' and is_owner(msg) then
       data[tostring(msg.to.id)]['settings']['set_photo'] = 'waiting'
       save_data(_config.moderation.data, data)
       return 'Please send me new group photo now'
@@ -1113,7 +1123,7 @@ local function run(msg, matches)
       return
     end
     if matches[1] == 'setflood' then 
-      if not is_momod(msg) then
+      if not is_owner(msg) then
         return "For moderators only!"
       end
       if tonumber(matches[2]) < 5 or tonumber(matches[2]) > 20 then
@@ -1193,7 +1203,7 @@ local function run(msg, matches)
       savelog(msg.to.id, name_log.." ["..msg.from.id.."] Used /help")
       return help()
     end
-    if matches[1] == 'res' and is_momod(msg) then 
+    if matches[1] == 'res' then 
       local cbres_extra = {
         chatid = msg.to.id
       }
