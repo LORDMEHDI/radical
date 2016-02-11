@@ -1221,7 +1221,12 @@ end
 return {
   patterns = {
   "^[!/](add)$",
+  "^[!/](add)$",
+  
   "^[!/](add) (realm)$",
+  "^[!/](add) (realm)$",
+  
+  "^[!/](rem)$",
   "^[!/](rem)$",
   "^[!/](rem) (realm)$",
   "^[!/](rules)$",
