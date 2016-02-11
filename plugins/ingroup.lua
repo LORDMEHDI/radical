@@ -884,7 +884,7 @@ local function run(msg, matches)
       
       savelog(msg.to.id, "Group { "..msg.to.print_name.." }  name changed to [ "..new_name.." ] by "..name_log.." ["..msg.from.id.."]")
     end
-    if matches[1] == 'setphoto' and is_momod(msg) then
+    if matches[1] == 'setpic' and is_momod(msg) then
       data[tostring(msg.to.id)]['settings']['set_photo'] = 'waiting'
       save_data(_config.moderation.data, data)
       return 'Please send me new group photo now'
@@ -1047,7 +1047,7 @@ local function run(msg, matches)
     end
   end]]
 
-    if matches[1] == 'newlink' and not is_realm(msg) then
+    if matches[1] == 'nlink' then
       if not is_momod(msg) then
         return "For moderators only!"
       end
@@ -1070,7 +1070,7 @@ local function run(msg, matches)
       end
       local group_link = data[tostring(msg.to.id)]['settings']['set_link']
       if not group_link then 
-        return "Create a link using /newlink first !"
+        return "Create a link using /nlink first !"
       end
        savelog(msg.to.id, name_log.." ["..msg.from.id.."] requested group link ["..group_link.."]")
       return "Group link:\n"..group_link
@@ -1101,7 +1101,7 @@ local function run(msg, matches)
       savelog(msg.to.id, name_log.." ["..msg.from.id.."] used /owner")
       return "Group owner is ["..group_owner..']'
     end
-    if matches[1] == 'setgpowner' then
+    if matches[1] == 'setgpown' then
       local receiver = "chat#id"..matches[2]
       if not is_admin(msg) then
         return "For admins only!"
@@ -1221,42 +1221,69 @@ end
 return {
   patterns = {
   "^[!/](add)$",
-  "^[!/](add)$",
-  
+  "^(add)$",
   "^[!/](add) (realm)$",
-  "^[!/](add) (realm)$",
-  
+  "^(add) (realm)$",
   "^[!/](rem)$",
-  "^[!/](rem)$",
+  "^(rem)$",
   "^[!/](rem) (realm)$",
+  "^(rem) (realm)$",
   "^[!/](rules)$",
+  "^(rules)$",
   "^[!/](about)$",
+  "^(about)$",
   "^[!/](setname) (.*)$",
-  "^[!/](setphoto)$",
+  "^(setname) (.*)$",
+  "^[!/](setpic)$",
+  "^(setpic)$",
   "^[!/](promote) (.*)$",
+  "^(promote) (.*)$",
   "^[!/](promote)",
+  "^(promote)",
   "^[!/](help)$",
+  "^(help)$",
   "^[!/](clean) (.*)$",
+  "^(clean) (.*)$",
   "^[!/](kill) (chat)$",
+  "^(kill) (chat)$",
   "^[!/](kill) (realm)$",
+  "^(kill) (realm)$",
   "^[!/](demote) (.*)$",
+  "^(demote) (.*)$",
   "^[!/](demote)",
+  "^(demote)",
   "^[!/](set) ([^%s]+) (.*)$",
+  "^(set) ([^%s]+) (.*)$",
   "^[!/](lock) (.*)$",
-  "^[!/](setowner) (%d+)$",
+  "^(lock) (.*)$",
+  "^[!/](setown) (%d+)$",
+  "^(setown) (%d+)$",
   "^[!/](setowner)",
+  "^(setowner)",
   "^[!/](owner)$",
+  "^(owner)$",
   "^[!/](res) (.*)$",
-  "^[!/](setgpowner) (%d+) (%d+)$",-- (group id) (owner id)
+  "^(res) (.*)$",
+  "^[!/](setgpown) (%d+) (%d+)$",-- (group id) (owner id)
+  "^(setgpown) (%d+) (%d+)$",-- (group id) (owner id)
   "^[!/](unlock) (.*)$",
+  "^(unlock) (.*)$",
   "^[!/](setflood) (%d+)$",
+  "^(setflood) (%d+)$",
   "^[!/](settings)$",
+  "^(settings)$",
+-- "^[!/](public) (.*)$",
 -- "^[!/](public) (.*)$",
   "^[!/](modlist)$",
-  "^[!/](newlink)$",
+  "^(modlist)$",
+  "^[!/](nlink)$",
+  "^(nlink)$",
   "^[!/](link)$",
+  "^(link)$",
   "^[!/](kickinactive)$",
+  "^(kickinactive)$",
   "^[!/](kickinactive) (%d+)$",
+  "^(kickinactive) (%d+)$",
   "%[(photo)%]",
   "^!!tgservice (.+)$",
   },
