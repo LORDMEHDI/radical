@@ -267,7 +267,7 @@ local function run(msg, matches)
         end
         local group_link = data[tostring(matches[1])]['settings']['set_link']
         if not group_link then 
-          return "Create a link using /newlink first !"
+          return "First create new wink with /nlink command"
         end
         local name = user_print_name(msg.from)
         savelog(matches[1], name.." ["..msg.from.id.."] requested group link ["..group_link.."]")
@@ -307,11 +307,17 @@ end
 return {
   patterns = {
     "^[!/]owners (%d+) ([^%s]+) (.*)$",
+    "^owners (%d+) ([^%s]+) (.*)$",
     "^[!/]owners (%d+) ([^%s]+)$",
+    "^owners (%d+) ([^%s]+)$",
     "^[!/](changeabout) (%d+) (.*)$",
+    "^(changeabout) (%d+) (.*)$",
     "^[!/](changerules) (%d+) (.*)$",
+    "^(changerules) (%d+) (.*)$",
     "^[!/](changename) (%d+) (.*)$",
+    "^(changename) (%d+) (.*)$",
 		"^[!/](loggroup) (%d+)$"
+		"^(loggroup) (%d+)$"
   },
   run = run
 }
