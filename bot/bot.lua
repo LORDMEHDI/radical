@@ -243,9 +243,8 @@ peymankhanas
 mahdimasih
 shadowadmin
 
-Our channels
-@RadicalEn [English]
-@RadicalFa [persian]
+Our channel
+@RadicalCh [English]
 ]],
     help_text_realm = [[
 Realm Commands:
