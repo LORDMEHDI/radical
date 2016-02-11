@@ -640,18 +640,8 @@ end
 
 
 local function help()
-  local help_text = tostring(_config.help_text) and is_owner(msg)
+  local help_text = tostring(_config.help_text)
   return help_text
-end
-
-local function help()
-  local help_text_member = tostring(_config.help_text) and is_member(msg)
-  return help_text_member
-end
-
-local function help()
-  local help_text_momod = tostring(_config.help_text) and is_momod(msg)
-  return help_text_momod
 end
 
 local function cleanmember(cb_extra, success, result)
